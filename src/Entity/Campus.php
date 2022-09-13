@@ -15,15 +15,15 @@ class Campus
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 50, unique : true)]
     private ?string $nom = null;
 
     #[ORM\OneToMany(mappedBy: 'campus', targetEntity: Participant::class)]
-    private Collection $campus;
+    private Collection $participants;
 
     public function __construct()
     {
-        $this->campus = new ArrayCollection();
+        $this->participants = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -46,29 +46,24 @@ class Campus
     /**
      * @return Collection<int, Participant>
      */
-    public function getCampus(): Collection
+    public function getParticipants(): Collection
     {
-        return $this->campus;
+        return $this->participants;
     }
 
-    public function addCampus(Participant $campus): self
+    public function addParticipant(Participant $participant): self
     {
-        if (!$this->campus->contains($campus)) {
-            $this->campus->add($campus);
-            $campus->setCampus($this);
+        if (!$this->participants->contains($participant)) {
+            $this->participants->add($participant);
+            $participant->setCampus($this);
         }
 
         return $this;
     }
 
-    public function removeCampus(Participant $campus): self
+    public function removeParticipant(Participant $participant): self
     {
-        if ($this->campus->removeElement($campus)) {
-            // set the owning side to null (unless already changed)
-            if ($campus->getCampus() === $this) {
-                $campus->setCampus(null);
-            }
-        }
+        $this->participants->removeElement($participant);
 
         return $this;
     }

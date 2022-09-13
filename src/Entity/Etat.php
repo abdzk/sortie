@@ -15,15 +15,15 @@ class Etat
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 50, unique: true)]
     private ?string $libelle = null;
 
     #[ORM\OneToMany(mappedBy: 'etat', targetEntity: Sortie::class)]
-    private Collection $etat;
+    private Collection $sorties;
 
     public function __construct()
     {
-        $this->etat = new ArrayCollection();
+        $this->sorties = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -46,29 +46,25 @@ class Etat
     /**
      * @return Collection<int, Sortie>
      */
-    public function getEtat(): Collection
+    public function getSorties(): Collection
     {
-        return $this->etat;
+        return $this->sorties;
     }
 
-    public function addEtat(Sortie $etat): self
+    public function addSortie(Sortie $sortie): self
     {
-        if (!$this->etat->contains($etat)) {
-            $this->etat->add($etat);
-            $etat->setEtat($this);
+        if (!$this->sorties->contains($sortie)) {
+            $this->sorties->add($sortie);
+            $sortie->setEtat($this);
         }
 
         return $this;
     }
 
-    public function removeEtat(Sortie $etat): self
+    public function removeSortie(Sortie $sortie): self
     {
-        if ($this->etat->removeElement($etat)) {
-            // set the owning side to null (unless already changed)
-            if ($etat->getEtat() === $this) {
-                $etat->setEtat(null);
-            }
-        }
+        $this->sorties->removeElement($sortie);
+
 
         return $this;
     }
