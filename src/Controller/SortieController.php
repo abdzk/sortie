@@ -8,10 +8,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class SortieController extends AbstractController
 {
     /**
-     * @Route("/sortie", name="sortie_affichage")
+     * @Route("/sortie", name="sortie_creation")
      */
-    public function affichage()
+    public function creation()
     {
-        return $this->render('sortie/affichage.html.twig');
+
+        return $this->render('sortie/creation.html.twig');
     }
 }
