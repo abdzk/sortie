@@ -2,17 +2,25 @@
 
 namespace App\Controller;
 
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 class SortieController extends AbstractController
 {
     /**
-     * @Route("/sortie", name="sortie_creation")
+     * @Route("/rechercher", name="sortie_rechercher")
      */
-    public function creation()
+    public function rechercher()
     {
 
-        return $this->render('sortie/creation.html.twig');
+
+        return $this->render('sortie/rechercher.html.twig');
+
+
     }
+
+
+
+
 }
